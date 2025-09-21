@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+      <title>Your Cart - Bharath Store</title>
+      
+      <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <h1 class="logo">Bharath Store</h1>
+      <a href="index.html" class="cart-btn">🏠 Home</a>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+      <h2>Your Cart</h2>
+
+      <div class="cart-wrapper">
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="cart-items">
+            <!-- JS will load items here -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cart-summary">
+        <h3>Grand Total: ₹<span id="grand-total">0.00</span></h3>
+        <button id="clear-cart" class="btn red">Clear Cart</button>
+        <button id="checkout" class="btn green">Checkout</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>©️ 2025 - Bharath Hegde | All rights reserved</footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const cartItemsContainer = document.getElementById("cart-items");
+        const grandTotalElement = document.getElementById("grand-total");
+
+        function renderCart() {
+          let cart = getCart();
+          cartItemsContainer.innerHTML = "";
+          let grandTotal = 0;
+
+          if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `
+            <tr><td colspan="5">🛒 Your cart is empty!</td></tr>
+            `;
+            grandTotalElement.textContent = "0.00";
+            return;
+          }
+
+          cart.forEach((item, index) => {
+            const total = item.price * item.quantity;
+            grandTotal += total;
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${item.name}</td>
+              <td>₹${item.price.toFixed(2)}</td>
+              <td>
+                <input type="number" min="1" value="${item.quantity}" data-index="${index}" class="qty-input">
+              </td>
+              <td>₹${total.toFixed(2)}</td>
+              <td><button class="btn red remove-btn" data-index="${index}">Remove</button></td>
+            `;
+            cartItemsContainer.appendChild(row);
+          });
+
+          grandTotalElement.textContent = grandTotal.toFixed(2);
+        }
+
+        // Quantity change
+        cartItemsContainer.addEventListener("input", (e) => {
+          if (e.target.classList.contains("qty-input")) {
+            let cart = getCart();
+            const index = e.target.dataset.index;
+            let newQty = parseInt(e.target.value);
+            if (isNaN(newQty) || newQty < 1) newQty = 1;
+            cart[index].quantity = newQty;
+            saveCart(cart);
+            renderCart();
+          }
+        });
+
+        // Remove item
+        cartItemsContainer.addEventListener("click", (e) => {
+          if (e.target.classList.contains("remove-btn")) {
+            let cart = getCart();
+            const index = e.target.dataset.index;
+            cart.splice(index, 1);
+            saveCart(cart);
+            renderCart();
+          }
+        });
+
+        // Clear cart
+        document.getElementById("clear-cart").addEventListener("click", () => {
+          let cart = getCart();
+          if (cart.length === 0) {
+            alert("⚠️ Cart is already empty!");
+            return;
+          }
+          if (confirm("Are you sure you want to clear the cart?")) {
+            localStorage.removeItem("cart");
+            renderCart();
+          }
+        });
+
+        // Checkout
+        document.getElementById("checkout").addEventListener("click", () => {
+          let cart = getCart();
+          if (cart.length === 0) {
+            alert("⚠️ Your cart is empty! Add items before checkout.");
+            return;
+          }
+          alert("🎉 Order placed successfully!");
+          localStorage.removeItem("cart");
+          renderCart();
+        });
+
+        renderCart();
+      });
+    </script>
+  </body>
+</html>
