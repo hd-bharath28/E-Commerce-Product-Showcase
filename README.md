@@ -44,7 +44,7 @@ This project provides a **lightweight, mobile-responsive solution** for product 
 
 🏠 index.html     → Homepage with product showcase  
 🛒 cart.html      → Cart page with table & total calculation   
-🎨 style.css      → Styling and responsive design
+🎨 style.css      → Styling and responsive design  
 ⚙️ script.js      → JavaScript logic (add-to-cart, remove, toast, localStorage)  
 🖼️ images/        → Product images (Smart Watch, Laptop, Tablet, etc.)  
 
