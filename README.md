@@ -42,6 +42,12 @@ This project provides a **lightweight, mobile-responsive solution** for product 
 
 ## 📂 Project Structure
 
+🏠 index.html     → Homepage with product showcase  
+🛒 cart.html      → Cart page with table & total calculation   
+🎨 style.css      → Styling and responsive design
+⚙️ script.js      → JavaScript logic (add-to-cart, remove, toast, localStorage)  
+🖼️ images/        → Product images (Smart Watch, Laptop, Tablet, etc.)  
+
 ---
 
 ## 📋 Algorithm & Deployment
@@ -58,8 +64,10 @@ This project provides a **lightweight, mobile-responsive solution** for product 
 ## 📸 Screenshots
 
 ### Homepage  
+<img width="400" src="https://github.com/user-attachments/assets/8d10fd05-ed74-41c3-9f6d-a6e6bfd47d8d" />
 
 ### Cart Page  
+<img width="600" src="https://github.com/user-attachments/assets/76fd8bba-b43b-48a4-a6c4-5f89e81bb3d9" />
 
 ---
 
